@@ -1,8 +1,9 @@
 
 # load some libraries
-require(png)
-require(leaflet)
-require(shiny)
+library(shiny)
+library(png)
+library(leaflet)
+
 
 shinyServer(function(input, output, session) {
   
@@ -36,7 +37,7 @@ shinyServer(function(input, output, session) {
   
   # legend
   output$legend <- renderPlot({
-    legend_img <- readPNG('/home/rjohnson/2.CURRENT_PROJECTS/shiny_app_development/ddddashboard/CHL_chlor_a_colorscale.png')
+    legend_img <- readPNG("CHL_chlor_a_colorscale.png")
     grid::grid.raster(legend_img)
     }, res = 500)
   

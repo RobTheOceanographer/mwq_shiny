@@ -7,7 +7,7 @@ url_grid <- "http://ereeftds.bom.gov.au/ereefs/tds/dodsC/ereef/mwq/P1D/2015/A201
 
 var_string <- "Chl_MIM"
 
-require(ncdf4)
+library(ncdf4)
 
 f<-nc_open(url_grid)
 

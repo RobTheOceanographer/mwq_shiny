@@ -22,8 +22,7 @@ shinyUI(navbarPage("eReefs Ocean Colour Viewer",
              
              sidebarPanel(
                h5('set date'),
-               dateInput(inputId = 'date',
-                         label = 'Date',min = '2013-01-01',
+               dateInput(inputId = 'chl_date', label = 'Date',min = '2013-01-01',
                          max = Sys.Date()-3),
                          width = 3),
              

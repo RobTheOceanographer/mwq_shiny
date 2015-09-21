@@ -34,6 +34,12 @@ shinyServer(function(input, output, session) {
     
     },height = 800, res = 500)
   
+  # legend
+  output$legend <- renderPlot({
+    legend_img <- readPNG('/home/rjohnson/2.CURRENT_PROJECTS/shiny_app_development/ddddashboard/CHL_chlor_a_colorscale.png')
+    grid::grid.raster(legend_img)
+    }, res = 500)
+  
   
   #Leaflet stuff.
   output$mymap <- renderLeaflet({

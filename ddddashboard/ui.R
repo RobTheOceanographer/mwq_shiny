@@ -24,10 +24,11 @@ shinyUI(navbarPage("eReefs Ocean Colour Viewer",
                h5('set date'),
                dateInput(inputId = 'date',
                          label = 'Date',min = '2013-01-01',
-                         max = Sys.Date()-3)
-               ,width = 3),
+                         max = Sys.Date()-3),
+                         width = 3),
              
              mainPanel(
+               plotOutput('legend', width = "100%", height = "80px",inline = FALSE),
                
                leafletOutput("mymap", height=800)
                

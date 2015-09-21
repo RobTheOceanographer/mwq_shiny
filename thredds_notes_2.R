@@ -1,12 +1,13 @@
 # notes on getting grids back fromt he thredds server.
 
 # An example data url.
-# http://ereeftds.bom.gov.au/ereefs/tds/dodsC/ereef/mwq/P1D/2010/A20100107.P1D.ANN_MIM_RMP.nc
+# url_grid <- "http://ereeftds.bom.gov.au/ereefs/tds/dodsC/ereef/mwq/P1D/2010/A20100107.P1D.ANN_MIM_RMP.nc"
+# url_grid <- "http://ereeftds.bom.gov.au/ereefs/tds/dodsC/ereef/mwq/P1M/A20150701.0.P1M.ANN_MIM_RMP.nc"
+url_grid <- "http://ereeftds.bom.gov.au/ereefs/tds/dodsC/ereef/mwq/P1D/2015/A20150730.P1D.ANN_MIM_RMP.nc"
 
-url_grid <- "http://ereeftds.bom.gov.au/ereefs/tds/dodsC/ereef/mwq/P1D/2010/A20100107.P1D.ANN_MIM_RMP.nc" 
 var_string <- "Chl_MIM"
 
-library(ncdf4)
+require(ncdf4)
 
 f<-nc_open(url_grid)
 
@@ -36,16 +37,13 @@ library(leaflet)
 #pal <- colorNumeric(c("#e5f5e0","#a1d99b", "#31a354"), values(r_f),na.color="transparent")
 #pal <- colorNumeric(c("#f7fcfd","#e5f5f9","#ccece6","#99d8c9","#66c2a4","#41ae76","#238b45","#005824"), values(r_f),na.color="transparent")
 #pal <- colorNumeric(c("#f7fcfd","#e5f5f9","#ccece6","#99d8c9","#66c2a4","#41ae76","#238b45","#005824"), values(r_f),na.color="transparent")
-listCol <- (chl.pal(10))
 
-c("0.1", "0.03", "0.1", "0.3", "1", "3", "10")
-chlpalfun(c(0.1, 0.03, 0.1, 0.3, 1, 3, 10 ))
-
-leg_col_func <- function(x){
-  
-  return(rgb(t(col2rgb(chlpalfun(x))) / 255))
-  
-  }
+#listCol <- (chl.pal(10))
+#c("0.1", "0.03", "0.1", "0.3", "1", "3", "10")
+#chlpalfun(c(0.1, 0.03, 0.1, 0.3, 1, 3, 10 ))
+#leg_col_func <- function(x){
+#  return(rgb(t(col2rgb(chlpalfun(x))) / 255))
+#}
 
 m <- leaflet() %>%
   addTiles() %>%  
@@ -57,9 +55,9 @@ m <- leaflet() %>%
 
 m  # Print the map
 
-pal <- chl.pal(palette = TRUE)
-breaks = pal$breaks
-col = pal$cols
+#pal <- chl.pal(palette = TRUE)
+#breaks = pal$breaks
+#col = pal$cols
 
 chlpalfun<- function(chlVal)
   {
@@ -74,7 +72,6 @@ chlpalfun<- function(chlVal)
   return(chlCol)
   
   }
-
 
 
   nearest.vec <- function(x, vec)
@@ -173,4 +170,7 @@ chl.pal <- function(x, palette = FALSE, alpha = 1) {
   }
   
 }
+
+
+
 

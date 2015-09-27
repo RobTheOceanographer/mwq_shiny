@@ -45,6 +45,21 @@ library(leaflet)
 #  return(rgb(t(col2rgb(chlpalfun(x))) / 255))
 #}
 
+
+## adding some true color overlay stuff.
+# 20150730
+usr_year = "2015"
+usr_month = "07"
+usr_day = "30"
+usr_prod = "mwq"
+usr_base_url = "http://ereeftds.bom.gov.au/ereefs/tds/fileServer/ereef/mwq/png_files"
+usr_png_url = file.path(usr_base_url, paste(usr_year, usr_month, paste(usr_year,usr_month,usr_day,".png",sep=""), sep="/"))
+download.file(usr_png_url, "current_image.png", method = "auto", quiet = FALSE, mode="wb", cacheOK = TRUE)
+usr_img <- readPNG('current_image.png')
+grid::grid.raster(usr_img)
+
+
+
 m <- leaflet() %>%
   addTiles() %>%  
   addRasterImage(r_f,  colors = chlpalfun, opacity = 0.8)

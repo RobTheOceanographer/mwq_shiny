@@ -22,6 +22,10 @@ rst.blue <- raster(usr_img[,,1])
 rst.green <- raster(usr_img[,,2])
 rst.red <- raster(usr_img[,,3])
 
+crs(rst.blue) <- sp::CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+crs(rst.green) <- sp::CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+crs(rst.red) <- sp::CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+
 plotRGB(brick(rst.blue, rst.green, rst.red),r=1,g=2,b=3, scale=800, stretch = "Lin")
 
 
@@ -39,6 +43,7 @@ leaflet() %>% addTiles() %>%
   addRasterImage(r, colors = pal, opacity = 0.8)
 
 # x <- "gdal_translate -of GTiff -a_ullr 142.0050048828125 -25.4950008392334 155.9949951171875 -9.505000114440918 -a_srs EPSG:4269 current_image.png output.tif"
+# on my macpro i had to do this too - xport GDAL_DATA=/Library/Frameworks/GDAL.framework/Versions/1.8/Resources/gdal/
 
 # r <- matrix(runif(9, 0, 1), 3)
 # g <- matrix(runif(9, 0, 1), 3)

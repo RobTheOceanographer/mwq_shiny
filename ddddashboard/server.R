@@ -49,12 +49,12 @@ shinyServer(function(input, output, session) {
     ## this is where the date string manipipulation should go ##
     # at the moment i'm only implementing the one day data but i would like to do all composites and have a selector for usr choice.
     # url_grid <- "http://ereeftds.bom.gov.au/ereefs/tds/dodsC/ereef/mwq/P1D/2015/A20150730.P1D.ANN_MIM_RMP.nc"
-    #usr_year = 2015
-    #usr_month = '07'
-    #usr_day = 29
-    usr_year = format(input$chl_date,"%Y")
-    usr_month = format(input$chl_date,"%m")
-    usr_day = format(input$chl_date,"%d")
+    usr_year = 2015
+    usr_month = '07'
+    usr_day = 30
+    #usr_year = format(input$chl_date,"%Y")
+    #usr_month = format(input$chl_date,"%m")
+    #usr_day = format(input$chl_date,"%d")
     usr_base_url = "http://ereeftds.bom.gov.au/ereefs/tds/dodsC/ereef/mwq/P1D/"
     
     #usr_grid_url = file.path(usr_base_url, paste(usr_year, paste(usr_year,usr_month,usr_day,".P1D.ANN_MIM_RMP.nc",sep=""), sep="/"))

@@ -1,10 +1,12 @@
-
-# load some libraries
 #library(shiny)
 library(png)
 library(leaflet)
 library(ncdf4)
 library(raster)
+library(shiny)
+library(shinyBS)
+library(shinyjs)
+library(shinythemes)
 
 shinyServer(function(input, output, session) {
   
@@ -14,7 +16,7 @@ shinyServer(function(input, output, session) {
   output$dateText  <- renderText({
     paste("input$date is", as.character(format(input$date,"%Y%m%d")))
   })
-
+  
   
   output$plot1 <- renderPlot({
     usr_year = format(input$date,"%Y")
@@ -34,13 +36,13 @@ shinyServer(function(input, output, session) {
     usr_img <- readPNG('current_image.png')
     grid::grid.raster(usr_img)
     
-    },height = 800, res = 500)
+  },height = 800, res = 500)
   
   ####### chlorophyll legend loader #######
   output$legend <- renderPlot({
     legend_img <- readPNG("CHL_chlor_a_colorscale.png")
     grid::grid.raster(legend_img)
-    }, res = 500)
+  }, res = 500)
   
   
   ####### chlorophyll data with Leaflet #######
@@ -89,9 +91,9 @@ shinyServer(function(input, output, session) {
     
     ## This is the chlorophyll leaflet itself ##
     leaflet() %>% addTiles() %>% setView(150, -20, zoom = 5) %>% addRasterImage(r_f,  colors = chlpalfun, opacity = 0.8)
-
     
-    })
+    
+  })
   
   
   

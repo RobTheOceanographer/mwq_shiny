@@ -17,6 +17,9 @@ usr_png_url = file.path(usr_base_url, paste(usr_year, usr_month, paste(usr_year,
 download.file(usr_png_url, "current_image.png", method = "auto", quiet = FALSE, mode="wb", cacheOK = TRUE)
 usr_img <- readPNG('current_image.png')
 
+rasterImage(usr_img, 142.0050048828125, -25.4950008392334, 155.9949951171875, -9.505000114440918)
+
+
 # Convert imagedata to raster
 rst.blue <- raster(usr_img[,,1])
 rst.green <- raster(usr_img[,,2])
@@ -26,7 +29,61 @@ crs(rst.blue) <- sp::CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
 crs(rst.green) <- sp::CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
 crs(rst.red) <- sp::CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
 
-plotRGB(brick(rst.blue, rst.green, rst.red),r=1,g=2,b=3, scale=800, stretch = "Lin")
+#rgbRaster <- stack(rst.blue, rst.green, rst.red)
+#plotRGB(rgbRaster,r=1,g=2,b=3, scale=800, stretch = "Lin")
+#plotRGB(brick(rst.blue, rst.green, rst.red),r=1,g=2,b=3, scale=800, stretch = "Lin")
+#rasterImage(as.raster(usr_img), 142.0050048828125, -25.4950008392334, 155.9949951171875, -9.505000114440918)
+M <- matrix( 1:length(as.matrix(rst.green)), ncol=ncol(as.matrix(rst.green)) )
+M2 <- raster(M, xmn=142.0050048828125, xmx=155.9949951171875, ymn=-25.4950008392334, ymx=-9.505000114440918)
+crs(M2) <- sp::CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+#pal <- colorNumeric('red', values(M2), na.color = "transparent")
+
+leaflet() %>% addTiles() %>% setView(150, -20, zoom = 5) %>% addRasterImage(M2, colors=vispalfun)
+
+# give the plotter only r but have the pallet return the rgb in hex based on all the grids that it can access by being a function.
+
+
+
+
+vispalfun <- function(pos_index)
+{
+  col <- rgb(rst.red[pos_index],rst.green[pos_index], rst.blue[pos_index], maxColorValue=255)
+  
+  return(col)
+}
+
+library(ggplot2)
+data()
+r_df <- fortify(as.matrix(rst.blue))
+head(r_df)
+
+
+d <- rgb(r_df$red,r_df$green,r_df$blue, maxColorValue=255)
+
+
+
+leaflet() %>% addTiles() %>%
+  addRasterImage(r, colors = pal, opacity = 0.8) %>%
+  addLegend(pal = pal, values = values(r),
+            title = "Surface temp")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ####
@@ -36,7 +93,7 @@ rst.blue <- raster(r[,,1])
 rst.green <- raster(r[,,2])
 rst.red <- raster(r[,,3])
 
-pal <- colorNumeric(c("blue", "green", "red"), ,
+pal <- colorNumeric(c("blue", "green", "red"), values(r),
                     na.color = "transparent")
 
 leaflet() %>% addTiles() %>%
@@ -59,9 +116,7 @@ rst.blue <- matrix(usr_img[,,3])
 rst.green <- matrix(usr_img[,,2])
 rst.red <- matrix(usr_img[,,1])
 
-
-
-col <- rgb(rst.red,rst.green, rst.blue)
+col <- rgb(rst.red,rst.green, rst.blue, maxColorValue=255)
 
 col2 <- rgb2hsv(col)
 
@@ -69,12 +124,17 @@ dim(col) <- c(dim(usr_img)[1],dim(usr_img)[2])
 
 library(grid)
 grid.raster(col, interpolate=FALSE)
+plot.new()
+rasterImage(as.raster(usr_img), 142.0050048828125, -25.4950008392334, 155.9949951171875, -9.505000114440918)
 
-rasterImage(col, 142.0050048828125, -25.4950008392334, 155.9949951171875, -9.505000114440918, interpolate=FALSE)
+leaflet() %>% addTiles() %>% setView(150, -20, zoom = 5) %>% addRasterImage(as.raster(usr_img))
 
 
 
-
+leaflet() %>% addTiles() %>%
+  addWMSTiles(usr_img,options = WMSTileOptions(format = "image/png", transparent = TRUE),
+    attribution = "eReefs MWQ data © 2015 BOM"
+  )
 
 
 
@@ -108,10 +168,28 @@ usr_png_url = file.path(usr_base_url, paste(usr_year, usr_month, paste(usr_year,
 
 download.file(usr_png_url, "current_image.png", method = "auto", quiet = FALSE, mode="wb", cacheOK = TRUE)
 usr_img <- readPNG('current_image.png')
-grid::grid.raster(usr_img)
+rast_im <- grid::grid.raster(usr_img)
 
+
+
+leaflet() %>% addTiles() %>% setView(150, -20, zoom = 5) %>% addRasterImage(rast_im,  colors = chlpalfun, opacity = 0.8)
 
 # http://ereeftds.bom.gov.au/ereefs/tds/dodsC/ereefs/mwq_areaSum_P1D.ascii?time[0:1:4739]
 # units: seconds since 1970-01-01 00:00:00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

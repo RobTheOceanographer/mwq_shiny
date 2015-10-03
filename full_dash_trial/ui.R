@@ -18,7 +18,7 @@ library(shinyBS)
 library(shinyjs)
 library(shinythemes)
 
-navbarPage(title="Global Sea Surface Temperature 1985-2015",id = 'main',theme = shinytheme("united"),
+navbarPage(title="eReefs MWQ Chlorophyll Viewer",id = 'main',theme = shinytheme("united"),
            # inverse=T,
            collapsible = T,
            tabPanel(title = icon('globe'),
@@ -64,24 +64,22 @@ navbarPage(title="Global Sea Surface Temperature 1985-2015",id = 'main',theme = 
                                       height='auto',
                                       #                                       div(class='row-fluid',
                                       #                                           div(class='span6',
-                                      plotOutput('legend', height = "90px", width = "100%")
+                                      plotOutput('legend', height = "80px", width = "100%"),
                                       # ),
                                       # div(class='span6',
                                       #actionButton('btn_clr',label = icon('refresh'))
                                       # )
                                       # )
-                                      
+                                      style = "opacity: 0.90; padding: 8px; background: #FFFFEE;"
                         ),
-
-
 
                         absolutePanel(bottom = 20,
                                       right = 10,
                                       draggable = F,
                                       width='auto',
                                       height='auto',
-                                      a(icon('github fa-2x'),href='https://github.com/davesteps/sst',target='_blank'),
-                                      a(icon('twitter fa-2x'),href='https://twitter.com/davesteps',target='_blank')
+                                      a(icon('github fa-2x'),href='https://github.com/RobTheOceanographer',target='_blank'),
+                                      a(icon('twitter fa-2x'),href='https://twitter.com/JohnsonRob',target='_blank')
                         ),
                         uiOutput('plot_UI')
                     )

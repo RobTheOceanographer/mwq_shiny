@@ -90,7 +90,10 @@ shinyServer(function(input, output, session) {
     
     
     ## This is the chlorophyll leaflet itself ##
-    leaflet() %>% addTiles() %>% setView(150, -20, zoom = 5) %>% addRasterImage(r_f,  colors = chlpalfun, opacity = 0.8)
+    leaflet() %>% addTiles() %>% setView(150, -20, zoom = 5) %>% addRasterImage(r_f,  colors = chlpalfun, opacity = 0.8, attribution = HTML(paste(a('eReesf CHL',target='_blank',
+                                                                                                                                                    href='http://ereeftds.bom.gov.au/ereefs/tds/catalog/ereef/mwq/catalog.html'),
+                                                                                                                                                  icon('copyright'),
+                                                                                                                                                  'Produced by the Bureau.')),)
     
     
   })

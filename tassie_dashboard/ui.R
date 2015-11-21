@@ -18,7 +18,7 @@ library(shinyBS)
 library(shinyjs)
 library(shinythemes)
 
-navbarPage(title="Tassie Sat Data Viewer",id = 'main',theme = shinytheme("united"),
+navbarPage(title="Tassie Ocean Colour Viewer",id = 'main',theme = shinytheme("united"),
            # inverse=T,
            collapsible = T,
            tabPanel(title =icon("globe"),

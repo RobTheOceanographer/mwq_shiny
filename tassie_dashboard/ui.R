@@ -18,10 +18,10 @@ library(shinyBS)
 library(shinyjs)
 library(shinythemes)
 
-navbarPage(title="eReefs MWQ Chlorophyll Viewer",id = 'main',theme = shinytheme("united"),
+navbarPage(title="Tassie Sat Data Viewer",id = 'main',theme = shinytheme("united"),
            # inverse=T,
            collapsible = T,
-           tabPanel(title = icon('globe'),
+           tabPanel(title =icon("globe"),
                     div(class="outer",
                         tags$head(
                           # Include our custom CSS
@@ -41,20 +41,26 @@ navbarPage(title="eReefs MWQ Chlorophyll Viewer",id = 'main',theme = shinytheme(
                         #                           width = 'auto',
                         #                           textOutput('mouselatlon')
                         #                         ),
-                        #                         
+                        # 
+#                         absolutePanel(top = 10,
+#                                       left = 200,
+#                                       draggable = F,
+#                                       width='auto',
+#                                       height='auto',
+#                                       #                                       div(class='row-fluid',
+#                                       #                                           div(class='span6',
+#                                       selectInput("dataType", label = NULL,
+#                                                   c("Chlorophyll" = "chl",
+#                                                     "Sea Surface Temperature" = "sst"))
+#                         ),
+#                         
                         absolutePanel(top = 10,
                                       left = 50,
                                       draggable = F,
                                       width=140,
                                       height='auto',
-                                      dateInput(inputId = 'chl_date', label = NULL,min = '2002-01-01', value = Sys.Date()-1,max = Sys.Date()-1),
+                                      dateInput(inputId = 'chl_date', label = NULL,min = '2013-01-01', max='2013-02-28', value = '2013-02-04'),
                                       uiOutput('plot_type')
-                                      # bsProgressBar("TSpb", visible=FALSE, striped=TRUE),
-#                                       bsTooltip('slt_date','Date of mapped layer'),
-#                                       bsTooltip('btn_ext','Plot SST data at markers'),
-#                                       bsTooltip('btn_clr','Clear Markers'),
-#                                       bsTooltip('slt_ptype','Change plot type'),
-#                                       bsAlert('a1')
                         ),
                         absolutePanel(top = 10,
                                       #left = 220,
@@ -62,15 +68,8 @@ navbarPage(title="eReefs MWQ Chlorophyll Viewer",id = 'main',theme = shinytheme(
                                       draggable = TRUE,
                                       width=300,
                                       height='auto',
-                                      #                                       div(class='row-fluid',
-                                      #                                           div(class='span6',
-                                      plotOutput('legend', height = "80px", width = "100%"),
-                                      # ),
-                                      # div(class='span6',
-                                      #actionButton('btn_clr',label = icon('refresh'))
-                                      # )
-                                      # )
-                                      style = "opacity: 0.90; padding: 8px; background: #FFFFEE;"
+                                      plotOutput('legend', height = "95px", width = "100%"),
+                                      style = "opacity: 0.90; padding: 8px;"
                         ),
 
                         absolutePanel(bottom = 20,
@@ -84,8 +83,19 @@ navbarPage(title="eReefs MWQ Chlorophyll Viewer",id = 'main',theme = shinytheme(
                         uiOutput('plot_UI')
                     )
            ),
-           tabPanel(title = icon('map-marker'),
-                    dataTableOutput('table')
+           tabPanel(title = icon("info-sign", lib = "glyphicon"),
+                    mainPanel(
+                      h1("Welcome!"),
+                      p("This is a demo dashboard for viewing ocean satellite data around Tasmania. It was build by Rob Johnson (robtheoceanographer[at]gmail.com) and is a prototype for future work."),
+                      h2("Disclaimer"),
+                      p("You are solely responsible for your use of this site (and any information or material available from it) and you accept all risks and consequences that might arise from your use of this site (and any information or material available from it)."),
+                      p("This includes:"),
+                      p("- any risk of your computer, software or data being damaged by any virus, disabling codes, worms or other devices and defects which might be transmitted or activated via the website, or your access to it or the downloading of files from the web site; and"),
+                      p("- any risk of connections transmitted to and from this site being intercepted and modified by third parties."),
+                      p(""),
+                      p("The blokes who made this site (or the data shown) are not in any way liable for losses, damages, costs, expenses and liability of any kind that you or any other person may suffer or incur directly or indirectly from you using this site and any information or material available from it.")
+                      
+                    )
            )
            
            
